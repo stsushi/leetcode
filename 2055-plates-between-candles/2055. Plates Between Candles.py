@@ -21,7 +21,6 @@ class Solution:
                 suffix_i = i
             suffix[i] = suffix_i
         ans = []
-        print(candles,prefix, suffix)
         for left,right in qs:
             if prefix[right] is not None and suffix[left] is not None and prefix[right] > suffix[left]:
                 ans.append(candles[prefix[right]]-candles[suffix[left]])
