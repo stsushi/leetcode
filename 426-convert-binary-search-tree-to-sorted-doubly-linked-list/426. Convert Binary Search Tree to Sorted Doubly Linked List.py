@@ -9,6 +9,10 @@ class Node:
 
 class Solution:
     def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        #part that I get we want to do inorder
+        # in order is left then right...
+        # we should do the reverse to left vs right
+        # need to practice the logic within a bit... 
         def helper(root):
             head = root
             tail = root
