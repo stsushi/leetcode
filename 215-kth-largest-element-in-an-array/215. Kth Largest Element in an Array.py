@@ -1,9 +1,9 @@
 from random import choice
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        # naive approach sort it and return
-        # better approach bucket the elements n time to put in buckets m runtime to check buckets and return starting from max->min
-        # best approach quick select n runtime 
+        # naive approach sort it and return nlogn, klogn
+        # m+n better approach bucket the elements n time to put in buckets m runtime to check buckets and return starting from max->min
+        # 1/2n+1/4n...->n best approach quick select n runtime 
         def quickselect(nums, k):
             pivot = choice(nums)
             smaller = []
