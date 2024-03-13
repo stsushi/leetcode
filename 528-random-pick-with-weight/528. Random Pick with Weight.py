@@ -1,43 +1,42 @@
 class Solution:
-    # possible solutions prefix sum + binary search
-    # init -> prefix sum o(n) runtime
-    # pickindex -> binary search log(n) runtime
 
-    # alias method pack everything into dict like struct with max len 2
-    # init -> n runtime at most iter over each elem once
-    # pick -> 1 runtime takes at most 2 box check to pick 
+    def __init__(self, w: List[int]):
+        ep =  10e-5 #variable due to rounding errors on floats
+        sum_w = sum(w)
+        n = len(w)
+        self.n = len(w) # too lazy to refactor... realized i need this in pickindex
+        box_size = 1/n
+        self.box_size = 1/n # too lazy to refactor... realized i need this in pickindex
+        w = [x/sum_w for x in w] #converts them into percent of whole
 
-    def __init__(self, w: List[int]): 
-        ep =  10e-5
-        self.n = len(w)
-        weight_sum = sum(w)
-        self.box_size = 1/self.n
-        w = [x/weight_sum for x in w] #each elem is now what percent of the total it is
-
+        small = { i:x for i,x in enumerate(w) if x < box_size}
+        big = { i:x for i,x in enumerate(w) if x >= box_size}
+        
         self.boxes = []
-        big = {i:val for (i, val) in enumerate(w) if  val >= self.box_size}
-        small = {i:val for (i, val) in enumerate(w) if  val < self.box_size}
-        while small and big:
-            j, size = small.popitem()
-            i, big_size = big.popitem()
-            
-            self.boxes.append((j,i,size))
 
-            big_size = big_size-(self.box_size-size)
-            if big_size <  self.box_size-ep: #constant is due to rounding errors on floats
-                small[i] = big_size
+        while small and big:
+            small_index, small_size = small.popitem()
+            big_index, big_size = big.popitem()
+
+            self.boxes.append((small_index,big_index,small_size))
+
+            new_big_size = big_size +small_size - box_size
+            if new_big_size >= box_size:
+                big[big_index] = new_big_size
             else:
-                big[i] = big_size
-        self.boxes.extend((key,key,self.box_size) for key in big)
+                small[big_index] = new_big_size
+        self.boxes.extend((key,key, box_size) for key in big)
+        self.boxes.extend((key, key, box_size) for key in small) #rounding error
+
+
 
 
     def pickIndex(self) -> int:
-        r = random.random()*self.n # range 0->2 
-        i, line = int(r), random.random()* self.box_size
-        print(self.boxes[i][0] if self.boxes[i][2]> line else self.boxes[i][1])
-        return self.boxes[i][0] if self.boxes[i][2]> line else self.boxes[i][1]
+        i = int(random.random()*self.n)
+        j = random.random()*self.box_size
+        pick = self.boxes[i]
+        return pick[0] if j < pick[2] else pick[1]
 
-        
 
 
 # Your Solution object will be instantiated and called as such:
