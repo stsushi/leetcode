@@ -24,7 +24,6 @@ class Solution:
             
 
         offset = -1 * min(record.keys())
-        print(record, offset)
 
         return [record[i - offset] for i in range(len(record))]
 
