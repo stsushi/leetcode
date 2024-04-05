@@ -2,6 +2,7 @@ class Solution:
     def validPalindrome(self, s: str) -> bool:
         
         def helper(i,j,canSkip=True):
+
             while(i < j):
                 if s[i]==s[j]:
                     i+=1
