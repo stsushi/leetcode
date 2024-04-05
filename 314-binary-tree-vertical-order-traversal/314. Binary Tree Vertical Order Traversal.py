@@ -10,7 +10,7 @@ class Solution:
         if not root: return []
 
         record = dict()
-        queue = deque([(root, 0)])
+        queue = deque([(root, 0)])# reminder to self since there is some "order" you must use a datastructure that can pop left
 
         while queue:
             curr, currpos = queue.popleft()
