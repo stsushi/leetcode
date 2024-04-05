@@ -1,17 +1,16 @@
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        # have to make it recursive to save the state
-        def verify(i,j, can_skip):
-            if i < 0 or j > len(s)-1:
-                return False
+        def helper(i,j):
             while i < j:
                 if s[i] != s[j]:
-                    if can_skip:
-                        return verify(i+1,j,False) or verify(i,j-1, False)
-                    else:
-                        return False
-                else:
-                    i+=1
-                    j-=1
+                    return i, j
+                i+=1
+                j-=1
+            return False, False
+        
+        i, j = helper(0, len(s)-1)
+
+        if i == False and j == False:
             return True
-        return verify(0,len(s)-1,True)
+        else:
+            return True if helper(i+1,j) == (False, False) or helper(i, j-1) == (False, False) else False
