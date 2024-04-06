@@ -7,15 +7,8 @@
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
         result = 0
-        def traversal(root):
-            if not root:
-                return 
-            if low <= root.val <= high:
-                nonlocal result
-                result+=root.val
-            if root.val >= low: 
-                traversal(root.left)
-            if root.val <= high:
-                traversal(root.right)
-        traversal(root)
+        if not root: return 0
+        if root.val >= low and root.val <= high: result+=root.val
+        if root.val > low: result += self.rangeSumBST(root.left, low, high)
+        if root.val < high: result += self.rangeSumBST(root.right, low, high)
         return result
