@@ -16,9 +16,12 @@ class Solution:
                     num, op = 0, elem
                 if elem in num_set:
                     num= num*10+int(elem)
+                if elem == ")":
+                    calculate(num,op)
+                    return  sum(stack), index
                 if elem == "(":
-                    
-                    return ans(index+1)
+                    num, j = calc(index+1)
+                    index = j
                 index+=1
             calculate(num,op)
             return sum(stack)
