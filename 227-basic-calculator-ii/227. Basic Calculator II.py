@@ -16,6 +16,9 @@ class Solution:
                     num, op = 0, elem
                 if elem in num_set:
                     num= num*10+int(elem)
+                if elem == "(":
+                    
+                    return ans(index+1)
                 index+=1
             calculate(num,op)
             return sum(stack)
