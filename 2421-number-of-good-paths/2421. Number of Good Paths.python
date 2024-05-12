@@ -10,11 +10,11 @@ class Solution(object):
         def union(x,y):
             UF[find(x)] = find(y)
         
-        tree = defaultdict(list)
+        tree = defaultdict(set)
         val2Nodes = defaultdict(set)
         for s,e in edges:
-            tree[s].append(e)
-            tree[e].append(s)
+            tree[s].add(e)
+            tree[e].add(s)
             val2Nodes[vals[s]].add(s)
             val2Nodes[vals[e]].add(e)
         res = len(vals)
