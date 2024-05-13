@@ -1,0 +1,30 @@
+class Solution(object):
+    def earliestAcq(self, logs, n):
+        """
+        :type logs: List[List[int]]
+        :type n: int
+        :rtype: int
+        """
+        unions = list(range(n))
+        size = [0]*n
+        self.joins = 0
+        def find(x):
+            if unions[x] == x:
+                return x
+            else:
+                return find(unions[x])
+        
+        def union(x,y):
+            x_par = find(x)
+            y_par = find(y)
+            if x_par == y_par:
+                return False
+            unions[x_par] = y_par
+            self.joins+=1
+        
+        for ts,x,y in sorted(logs, key=lambda x: x[0]):
+            union(x,y)
+            if self.joins == n-1:
+                return ts
+        return -1
+            
