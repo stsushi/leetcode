@@ -1,29 +1,25 @@
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        counter = defaultdict(int)
-        max_char = ""
-        max_count = 0
-        for letter in s:
-            counter[letter] +=1
-            cur_count = counter[letter]
-            if cur_count > max_count:
-                max_count = cur_count
-                max_char = letter
-        if max_count > (len(s)-1)//2+1:
-            return ""
-        i = 0
-        res = [None]*len(s)
-        for _ in range(max_count):
-            res[i] = max_char
-            i+=2
-        del counter[max_char]
+        counter = [0] * 26
+        max_count_index = 0
+        for c in s:
+            i = ord(c) - ord('a')
+            counter[i] += 1
+            if counter[i] > counter[max_count_index]:
+                max_count_index = i
+        
+        if counter[max_count_index] > math.ceil(len(s) / 2):
+            return ''
 
-        for letter in counter:
-            count = counter[letter]
+        res = [None] * len(s)
+        pos = 0
+        for i in range(26):
+            count = counter[(max_count_index + i) % 26]
+            char = chr(ord('a') + (max_count_index + i) % 26)
             for _ in range(count):
-                if i > len(s)-1:
-                    i = 1
-                res[i] = letter
-                i+=2
-        return "".join(res)
-            
+                print(res)
+                res[pos] = char
+                pos += 2
+                if pos >= len(s):
+                    pos = 1
+        return ''.join(res)
